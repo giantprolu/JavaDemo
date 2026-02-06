@@ -49,6 +49,22 @@ public class App
             for (Livre l : queryAll.getResultList()) {
                 System.out.println("Livre de GetAll : " + l.getTitre() + " de " + l.getAuteur());
             }
+            //Réalisez une requête qui permet d'extraire un emprunt et tous ses livres associés
+            TypedQuery<Emprunt> queryEmprunt = em.createQuery(
+                "SELECT e FROM Emprunt e JOIN FETCH e.livres WHERE e.id = 1", Emprunt.class);
+            Emprunt emprunt = queryEmprunt.getSingleResult();
+            System.out.println("Emprunt ID: " + emprunt.getId());
+            for (Livre l : emprunt.getLivres()) {
+                System.out.println("  - Livre: " + l.getTitre());
+            }
+
+            //Réalisez une requête qui permet d'extraire tous les emprunts d'un client donné
+            TypedQuery<Emprunt> queryEmpruntsClient = em.createQuery(
+                "SELECT e FROM Emprunt e WHERE e.id_client = :clientId", Emprunt.class);
+            queryEmpruntsClient.setParameter("clientId", 1);
+            for (Emprunt e : queryEmpruntsClient.getResultList()) {
+                System.out.println("Emprunt ID: " + e.getId());
+            }
             em.getTransaction().commit();
         }
     }   

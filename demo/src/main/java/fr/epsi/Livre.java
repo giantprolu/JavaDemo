@@ -1,6 +1,5 @@
 package fr.epsi;
 
-import java.io.Serializable;
 
 import jakarta.persistence.*;
 
@@ -15,7 +14,12 @@ public class Livre {
     private String titre;
     @Column(name = "AUTEUR")
     private String auteur; 
-
+    @ManyToMany
+    @JoinTable(name = "COMPO",
+        joinColumns = @JoinColumn(name = "ID_LIV", referencedColumnName = "ID"),
+        inverseJoinColumns = @JoinColumn(name = "ID_EMP", referencedColumnName = "ID")
+    )
+    private java.util.Set<Livre> livres;
     public Livre() {
     }
 
