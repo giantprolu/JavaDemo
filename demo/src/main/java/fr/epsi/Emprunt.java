@@ -17,16 +17,16 @@ public class Emprunt {
     private LocalDateTime date_fin; 
     @Column(name = "DELAI")
     private Integer delai;
-    @Column(name = "ID_CLIENT")
-    private Integer id_client;
+
     @ManyToMany
     @JoinTable(name = "COMPO",
         joinColumns = @JoinColumn(name = "ID_EMP", referencedColumnName = "ID"),
         inverseJoinColumns = @JoinColumn(name = "ID_LIV", referencedColumnName = "ID")
     )
     private java.util.Set<Livre> livres;
-    @OneToMany(mappedBy = "emprunt")
-    private java.util.Set<Client> clients;
+    @ManyToOne
+    @JoinColumn(name = "ID_CLIENT", referencedColumnName = "ID")
+    private Client client;
 
     public Emprunt() {
     }
@@ -56,5 +56,8 @@ public class Emprunt {
     }
     public java.util.Set<Livre> getLivres() {
         return livres;
+    }
+    public Client getClient() {
+        return client;
     }
 }

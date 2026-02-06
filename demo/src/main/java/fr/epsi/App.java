@@ -51,7 +51,7 @@ public class App
             }
             //Réalisez une requête qui permet d'extraire un emprunt et tous ses livres associés
             TypedQuery<Emprunt> queryEmprunt = em.createQuery(
-                "SELECT e FROM Emprunt e JOIN FETCH e.livres WHERE e.id = 1", Emprunt.class);
+                "SELECT e FROM Emprunt e JOIN e.livres WHERE e.id = 1", Emprunt.class);
             Emprunt emprunt = queryEmprunt.getSingleResult();
             System.out.println("Emprunt ID: " + emprunt.getId());
             for (Livre l : emprunt.getLivres()) {
@@ -60,8 +60,7 @@ public class App
 
             //Réalisez une requête qui permet d'extraire tous les emprunts d'un client donné
             TypedQuery<Emprunt> queryEmpruntsClient = em.createQuery(
-                "SELECT e FROM Emprunt e WHERE e.id_client = :clientId", Emprunt.class);
-            queryEmpruntsClient.setParameter("clientId", 1);
+                "SELECT e FROM Emprunt e WHERE e.client.id = 1", Emprunt.class);
             for (Emprunt e : queryEmpruntsClient.getResultList()) {
                 System.out.println("Emprunt ID: " + e.getId());
             }

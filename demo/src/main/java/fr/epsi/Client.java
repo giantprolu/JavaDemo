@@ -14,9 +14,8 @@ public class Client {
     private String nom;
     @Column(name = "PRENOM")
     private String prenom; 
-    @ManyToOne
-    @JoinColumn(name = "ID_EMPRUNT", referencedColumnName = "ID")
-    private Emprunt emprunt;
+    @OneToMany(mappedBy = "client")
+    private java.util.Set<Emprunt> emprunts;
     public Client() {
     }
 
@@ -42,5 +41,8 @@ public class Client {
     }
     public void setPrenom(String prenom) {
         this.prenom = prenom;
+    }
+    public java.util.Set<Emprunt> getEmprunts() {
+        return emprunts;
     }
 }
